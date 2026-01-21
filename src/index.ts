@@ -19,7 +19,7 @@ import { config } from 'dotenv';
 import http from 'http';
 import { existsSync } from "fs";
 
-// Veritabanı ve fonksiyonları tek bir yerden çekiyoruz (DÜZELTİLEN KISIM BURASI)
+// Veritabanı (Burası zaten düzgündü)
 import db, {
     initializeDatabase,
     getOrCreateUser,
@@ -68,6 +68,7 @@ import db, {
     renameCharacter,
 } from "./database/db.ts";
 
+// DÜZELTME BURADA: Sonlarına .ts eklendi
 import {
     createCharacterEmbed,
     createProfileEmbed,
@@ -75,9 +76,13 @@ import {
     createTradeEmbed,
     createHelpEmbed,
     getRankEmoji,
-} from "./utils/embeds";
-import { findCharacterImage, findAllCharacterImages } from "./utils/imageUtils";
-import type { SpawnedCharacter } from "./types";
+} from "./utils/embeds.ts";
+
+// DÜZELTME BURADA: Sonuna .ts eklendi
+import { findCharacterImage, findAllCharacterImages } from "./utils/imageUtils.ts";
+
+// DÜZELTME BURADA: Sonuna .ts eklendi
+import type { SpawnedCharacter } from "./types.ts";
 
 // Çevre değişkenlerini yükle
 config();
