@@ -47,7 +47,7 @@ import {
     getCharactersPaginated,
     renameCharacter,
     db,
-} from "./database/db";
+} import db from "./database/db.ts";
 import {
     createCharacterEmbed,
     createProfileEmbed,
