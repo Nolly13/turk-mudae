@@ -1,3 +1,5 @@
+import { Client, GatewayIntentBits } from 'discord.js';
+import http from 'http';
 import { Client, GatewayIntentBits, Events, Message, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ButtonBuilder, ButtonStyle, ModalSubmitInteraction, StringSelectMenuInteraction, AttachmentBuilder, TextChannel } from "discord.js";
 import { config } from "dotenv";
 import {
@@ -1770,5 +1772,13 @@ if (!token) {
     console.error("❌ DISCORD_TOKEN bulunamadı! .env dosyasını kontrol et.");
     process.exit(1);
 }
-
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Bot aktif!');
+});
+const port = process.env.PORT || 3000;
+server.listen(port, () => {
+  console.log(`Web sunucusu ${port} portunda calisiyor.`);
+});
+client.login(process.env.TOKEN);
 client.login(token);
