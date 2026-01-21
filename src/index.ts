@@ -1,6 +1,26 @@
-import { Client, GatewayIntentBits } from 'discord.js';
+import { 
+    Client, 
+    GatewayIntentBits, 
+    Events, 
+    EmbedBuilder, 
+    ButtonBuilder, 
+    ButtonStyle, 
+    ActionRowBuilder, 
+    StringSelectMenuBuilder, 
+    StringSelectMenuOptionBuilder, 
+    ModalBuilder, 
+    TextInputBuilder, 
+    TextInputStyle, 
+    AttachmentBuilder, 
+    Message,
+    TextChannel
+} from 'discord.js';
+import { config } from 'dotenv';
 import http from 'http';
-import {
+import { existsSync } from "fs";
+
+// Veritabanı ve fonksiyonları tek bir yerden çekiyoruz (DÜZELTİLEN KISIM BURASI)
+import db, {
     initializeDatabase,
     getOrCreateUser,
     updateUserCoins,
@@ -46,8 +66,8 @@ import {
     useBonusRoll,
     getCharactersPaginated,
     renameCharacter,
-    db,
-} import db from "./database/db.ts";
+} from "./database/db.ts";
+
 import {
     createCharacterEmbed,
     createProfileEmbed,
@@ -57,11 +77,20 @@ import {
     getRankEmoji,
 } from "./utils/embeds";
 import { findCharacterImage, findAllCharacterImages } from "./utils/imageUtils";
-import { existsSync } from "fs";
 import type { SpawnedCharacter } from "./types";
 
 // Çevre değişkenlerini yükle
 config();
+
+// Web Sunucusu (Render için gerekli)
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Bot aktif!');
+});
+const port = process.env.PORT || 3000;
+server.listen(port, () => {
+  console.log(`Web sunucusu ${port} portunda calisiyor.`);
+});
 
 // Bot prefix
 const PREFIX = ".";
@@ -232,7 +261,6 @@ client.on(Events.MessageCreate, async (message: Message) => {
             }
 
             // ==================== KARAKTER ====================
-            // Roll komutları: .roll, .e (erkek), .k (kadın), .o (oyun), .g (generic)
             case "roll":
             case "r":
             case "e":  // Erkek
@@ -1770,13 +1798,5 @@ if (!token) {
     console.error("❌ DISCORD_TOKEN bulunamadı! .env dosyasını kontrol et.");
     process.exit(1);
 }
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Bot aktif!');
-});
-const port = process.env.PORT || 3000;
-server.listen(port, () => {
-  console.log(`Web sunucusu ${port} portunda calisiyor.`);
-});
-client.login(process.env.TOKEN);
+
 client.login(token);
