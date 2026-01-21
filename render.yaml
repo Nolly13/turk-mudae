@@ -1,0 +1,17 @@
+services:
+  - type: worker
+    name: turk-mudae-bot
+    runtime: node
+    region: frankfurt
+    plan: free
+    buildCommand: curl -fsSL https://bun.sh/install | bash && ~/.bun/bin/bun install
+    startCommand: ~/.bun/bin/bun run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: PREFIX
+        sync: false
+      - key: CLIENT_ID
+        sync: false
