@@ -19,8 +19,9 @@ import { config } from 'dotenv';
 import http from 'http';
 import { existsSync } from "fs";
 
-// Veritabanı (Burası zaten düzgündü)
-import db, {
+// DÜZELTME BURADA: "db" parantez içine alındı
+import {
+    db,
     initializeDatabase,
     getOrCreateUser,
     updateUserCoins,
@@ -68,7 +69,6 @@ import db, {
     renameCharacter,
 } from "./database/db.ts";
 
-// DÜZELTME BURADA: Sonlarına .ts eklendi
 import {
     createCharacterEmbed,
     createProfileEmbed,
@@ -78,10 +78,7 @@ import {
     getRankEmoji,
 } from "./utils/embeds.ts";
 
-// DÜZELTME BURADA: Sonuna .ts eklendi
 import { findCharacterImage, findAllCharacterImages } from "./utils/imageUtils.ts";
-
-// DÜZELTME BURADA: Sonuna .ts eklendi
 import type { SpawnedCharacter } from "./types.ts";
 
 // Çevre değişkenlerini yükle
