@@ -1,5 +1,5 @@
-import { Client, GatewayIntentBits, Events, Message, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ButtonBuilder, ButtonStyle, ModalSubmitInteraction, StringSelectMenuInteraction, AttachmentBuilder, TextChannel } from "discord.js";
-import { config } from "dotenv";
+import { Client, GatewayIntentBits } from 'discord.js';
+import http from 'http';
 import {
     initializeDatabase,
     getOrCreateUser,
