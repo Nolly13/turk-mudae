@@ -1,7 +1,5 @@
-import { Client, GatewayIntentBits } from 'discord.js';
+import { Client, GatewayIntentBits } from 'discord.js'; // Sadece 1 tane var
 import http from 'http';
-import { Client, GatewayIntentBits, Events, Message, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ButtonBuilder, ButtonStyle, ModalSubmitInteraction, StringSelectMenuInteraction, AttachmentBuilder, TextChannel } from "discord.js";
-import { config } from "dotenv";
 import {
     initializeDatabase,
     getOrCreateUser,
@@ -1780,5 +1778,5 @@ const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`Web sunucusu ${port} portunda calisiyor.`);
 });
-client.login(process.env.TOKEN);
+client.login(process.env.TOKEN)
 client.login(token);
