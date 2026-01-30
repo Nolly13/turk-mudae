@@ -218,10 +218,18 @@ async function checkAuctions() {
     }
 }
 
-// Duplicate listener önleme - her restart'ta eski listener'ları temizle
-client.removeAllListeners(Events.MessageCreate);
-client.removeAllListeners(Events.InteractionCreate);
-client.removeAllListeners(Events.MessageReactionAdd);
+// Global flag to track if listeners are already registered (survives hot reload)
+declare global {
+    var listenersRegistered: boolean | undefined;
+}
+
+// Eğer listener'lar zaten kayıtlıysa, tekrar kaydetme
+if (globalThis.listenersRegistered) {
+    console.log("⚠️ Event listeners zaten kayıtlı, atlanıyor...");
+} else {
+    globalThis.listenersRegistered = true;
+    console.log("📌 Event listeners kaydediliyor...");
+}
 
 // Mesaj olayı
 client.on(Events.MessageCreate, async (message: Message) => {
