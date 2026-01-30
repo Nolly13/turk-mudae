@@ -115,16 +115,46 @@ const client = new Client({
     ],
 });
 
+// Interval guard to prevent duplicate intervals
+let auctionIntervalId: ReturnType<typeof setInterval> | null = null;
+
 // Bot hazır olduğunda
-client.once(Events.ClientReady, (readyClient) => {
+client.once(Events.ClientReady, async (readyClient) => {
     console.log(`✅ ${readyClient.user.tag} olarak giriş yapıldı!`);
     console.log(`📊 ${readyClient.guilds.cache.size} sunucuda aktif`);
+    console.log(`🔄 Yeniden Başlatıldı!`);
 
     // Veritabanını başlat
     initializeDatabase();
 
-    // Açık artırma kontrolcüsü (her dakika)
-    setInterval(checkAuctions, 60000);
+    // Önceki interval varsa temizle (duplicate önleme)
+    if (auctionIntervalId) {
+        clearInterval(auctionIntervalId);
+    }
+
+    // Açık artırma kontrolcüsü - ilk kontrolü 60 saniye sonra yap (restart sonrası duplicate önleme)
+    setTimeout(() => {
+        // İlk kontrol
+        checkAuctions();
+        // Sonrasında her dakika kontrol et
+        auctionIntervalId = setInterval(checkAuctions, 60000);
+    }, 60000);
+
+    // Tüm sunuculara yeniden başlatıldı mesajı gönder
+    for (const guild of readyClient.guilds.cache.values()) {
+        try {
+            // İlk metin kanalını bul
+            const textChannel = guild.channels.cache.find(
+                (ch) => ch.isTextBased() && !ch.isVoiceBased() && ch.permissionsFor(guild.members.me!)?.has('SendMessages')
+            ) as TextChannel | undefined;
+
+            if (textChannel) {
+                await textChannel.send("🔄 **Bot Yeniden Başlatıldı!**").catch(() => { });
+            }
+        } catch (e) {
+            // Kanal bulunamazsa sessizce devam et
+        }
+    }
 });
 
 // Açık artırmaları kontrol et
