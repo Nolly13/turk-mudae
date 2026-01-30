@@ -218,6 +218,11 @@ async function checkAuctions() {
     }
 }
 
+// Duplicate listener önleme - her restart'ta eski listener'ları temizle
+client.removeAllListeners(Events.MessageCreate);
+client.removeAllListeners(Events.InteractionCreate);
+client.removeAllListeners(Events.MessageReactionAdd);
+
 // Mesaj olayı
 client.on(Events.MessageCreate, async (message: Message) => {
     // Bot mesajlarını ve prefix'siz mesajları ignore et
