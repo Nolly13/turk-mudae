@@ -165,6 +165,82 @@ export function createTradeEmbed(trade: any, fromUsername: string): EmbedBuilder
         .setTimestamp();
 }
 
+// Rehber embed'i - Oyunun nasıl oynandığını açıklar
+export function createGuideEmbed(): EmbedBuilder {
+    return new EmbedBuilder()
+        .setTitle("📚 Türk Mudae Bot - Oyun Rehberi")
+        .setColor(0x9B59B6)
+        .setDescription("Hoş geldin! Bu rehber sana oyunun nasıl oynandığını öğretecek.")
+        .addFields(
+            {
+                name: "🎮 Oyun Nedir?",
+                value: `
+Türk Mudae, anime ve oyun karakterlerini toplayabileceğin bir Discord botudur!
+Karakterleri roll yaparak bulabilir, sahiplenebilir, takas edebilir ve açık artırmaya çıkarabilirsin.
+                `.trim()
+            },
+            {
+                name: "🎲 Karakter Nasıl Bulunur?",
+                value: `
+\`.roll\` veya \`.r\` yazarak rastgele bir karakter çağırabilirsin.
+Özel roll komutları:
+• \`.e\` - Sadece erkek karakterler
+• \`.k\` - Sadece kadın karakterler
+• \`.a\` - Sadece anime karakterleri
+• \`.o\` - Sadece oyun karakterleri
+
+⚠️ Saatte **10 roll hakkın** var! \`.ben\` ile kontrol edebilirsin.
+                `.trim()
+            },
+            {
+                name: "❤️ Karakter Nasıl Sahiplenilir?",
+                value: `
+Roll yaptığında altında ❤️ butonu çıkar. Bu butona tıklayarak karakteri sahiplenebilirsin!
+• Her **3 saatte 1 claim hakkın** var
+• Karakteri sahiplenmek için 60 saniye süren var
+• Sahiplendiğin karakterleri \`.karakterlerim\` ile görebilirsin
+                `.trim()
+            },
+            {
+                name: "💰 Ekonomi Sistemi",
+                value: `
+• \`.gunluk\` - Her gün **100 ShoreCoin** al
+• \`.bakiye\` - Bakiyeni kontrol et
+• \`.transfer @kullanıcı miktar\` - Para gönder
+• \`.özellik\` - Bonus claim/roll satın al
+                `.trim()
+            },
+            {
+                name: "🔄 Takas Sistemi",
+                value: `
+Diğer oyuncularla karakter takası yapabilirsin:
+• \`.takas @kişi teklif_karakteri istek_karakteri\` - Takas teklifi
+• \`.kosulsuztakas @kişi karakter\` - Hediye olarak gönder
+• \`.takaskabul\` / \`.takasreddet\` - Takası yanıtla
+                `.trim()
+            },
+            {
+                name: "🔨 Açık Artırma",
+                value: `
+Karakterlerini ShoreCoin karşılığında satabilirsin:
+• \`.satisacikar karakter_ismi fiyat dakika\` - Açık artırma başlat
+• \`.teklif karakter_ismi miktar\` - Teklif ver
+• \`.acikartirmalar\` - Aktif açık artırmaları gör
+                `.trim()
+            },
+            {
+                name: "📊 Karakter Değeri",
+                value: `
+Her karakterin bir sıralaması (rank) ve değeri var:
+👑 #1 | 💎 Top 5 | 🔥 Top 10 | ⭐ Top 25 | ✨ Top 50 | 💫 Top 100
+Düşük sıralama = Daha değerli karakter!
+                `.trim()
+            }
+        )
+        .setFooter({ text: "Tüm komutlar için: .yardim | Prefix: . (nokta)" })
+        .setTimestamp();
+}
+
 // Yardım embed'i
 export function createHelpEmbed(): EmbedBuilder {
     return new EmbedBuilder()
@@ -214,6 +290,12 @@ export function createHelpEmbed(): EmbedBuilder {
                 name: "⬆️ Geliştirme Komutları",
                 value: `
 \`.gelistir <karakter_ismi>\` - Karakteri geliştir (Level başına 50 SC)
+        `.trim()
+            },
+            {
+                name: "📚 Rehber Komutları",
+                value: `
+\`.rehber\` - Oyunun nasıl oynandığını öğren
         `.trim()
             },
             {

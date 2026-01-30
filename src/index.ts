@@ -1,17 +1,17 @@
-import { 
-    Client, 
-    GatewayIntentBits, 
-    Events, 
-    EmbedBuilder, 
-    ButtonBuilder, 
-    ButtonStyle, 
-    ActionRowBuilder, 
-    StringSelectMenuBuilder, 
-    StringSelectMenuOptionBuilder, 
-    ModalBuilder, 
-    TextInputBuilder, 
-    TextInputStyle, 
-    AttachmentBuilder, 
+import {
+    Client,
+    GatewayIntentBits,
+    Events,
+    EmbedBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    ActionRowBuilder,
+    StringSelectMenuBuilder,
+    StringSelectMenuOptionBuilder,
+    ModalBuilder,
+    TextInputBuilder,
+    TextInputStyle,
+    AttachmentBuilder,
     Message,
     TextChannel
 } from 'discord.js';
@@ -75,6 +75,7 @@ import {
     createAuctionEmbed,
     createTradeEmbed,
     createHelpEmbed,
+    createGuideEmbed,
     getRankEmoji,
 } from "./utils/embeds.ts";
 
@@ -86,12 +87,12 @@ config();
 
 // Web Sunucusu (Render için gerekli)
 const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Bot aktif!');
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Bot aktif!');
 });
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
-  console.log(`Web sunucusu ${port} portunda calisiyor.`);
+    console.log(`Web sunucusu ${port} portunda calisiyor.`);
 });
 
 // Bot prefix
@@ -205,6 +206,12 @@ client.on(Events.MessageCreate, async (message: Message) => {
             case "help":
             case "komutlar":
                 await message.reply({ embeds: [createHelpEmbed()] });
+                break;
+
+            // ==================== REHBER ====================
+            case "rehber":
+            case "guide":
+                await message.reply({ embeds: [createGuideEmbed()] });
                 break;
 
             // ==================== EKONOMİ ====================
