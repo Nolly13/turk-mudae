@@ -1852,3 +1852,22 @@ if (!token) {
 }
 
 client.login(token);
+
+// Graceful shutdown - düzgün kapanma
+function gracefulShutdown(signal: string) {
+    console.log(`\n🛑 ${signal} alındı. Bot kapatılıyor...`);
+
+    // Interval'ları temizle
+    if (auctionIntervalId) {
+        clearInterval(auctionIntervalId);
+    }
+
+    // Discord bağlantısını kes
+    client.destroy();
+    console.log("✅ Bot düzgün şekilde kapatıldı.");
+    process.exit(0);
+}
+
+// Kapanma sinyallerini dinle
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));  // Ctrl+C
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM')); // Kill komutu
